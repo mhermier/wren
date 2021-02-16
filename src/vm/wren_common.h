@@ -155,6 +155,7 @@
 #ifdef DEBUG
 
   #include <stdio.h>
+  #include <stdlib.h>
 
   #define ASSERT(condition, message)                                           \
       do                                                                       \
