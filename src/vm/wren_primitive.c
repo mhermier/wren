@@ -45,6 +45,19 @@ bool validateInt(WrenVM* vm, Value arg, const char* argName)
   return validateIntValue(vm, AS_NUM(arg), argName);
 }
 
+bool validateUInt52(WrenVM* vm, Value arg, const char* argName)
+{
+  if (!validateInt(vm, arg, argName)) return false;
+
+  double value = AS_NUM(arg);
+  if (wrenDoubleClamp(value, 0, WREN_UINT52_MAX) == value)
+  {
+    return true;
+  }
+
+  RETURN_ERROR_FMT("$ must be an small integer.", argName);
+}
+
 bool validateKey(WrenVM* vm, Value arg)
 {
   if (IS_BOOL(arg) || IS_CLASS(arg) || IS_NULL(arg) ||

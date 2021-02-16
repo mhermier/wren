@@ -79,6 +79,11 @@ bool validateIntValue(WrenVM* vm, double value, const char* argName);
 // reports an error and returns false.
 bool validateInt(WrenVM* vm, Value arg, const char* argName);
 
+// Validates that the given [arg] is a uint52_t, castable back and forth to a
+// double without possible loss. Returns true if it is. If not, reports an
+// error and returns false.
+bool validateUInt52(WrenVM* vm, Value arg, const char* argName);
+
 // Validates that [arg] is a valid object for use as a map key. Returns true if
 // it is. If not, reports an error and returns false.
 bool validateKey(WrenVM* vm, Value arg);

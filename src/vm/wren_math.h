@@ -19,6 +19,10 @@ typedef union
 
 #define WREN_DOUBLE_NAN (wrenDoubleFromBits(WREN_DOUBLE_QNAN_POS_MIN_BITS))
 
+// Integer limits that are always lossless castable to a double.
+#define WREN_UINT52_MASK (UINT64_C(0x000FFFFFFFFFFFFF))
+#define WREN_UINT52_MAX  (UINT64_C(0x000FFFFFFFFFFFFF))
+
 static inline double wrenDoubleFromBits(uint64_t bits)
 {
   WrenDoubleBits data;
