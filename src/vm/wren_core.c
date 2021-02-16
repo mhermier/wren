@@ -758,7 +758,7 @@ DEF_PRIMITIVE(num_clamp)
   double value = AS_NUM(args[0]);
   double min = AS_NUM(args[1]);
   double max = AS_NUM(args[2]);
-  double result = (value < min) ? min : ((value > max) ? max : value);
+  double result = wrenDoubleClamp(value, min, max);
   RETURN_NUM(result);
 }
 

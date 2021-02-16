@@ -1,6 +1,8 @@
 #ifndef wren_math_h
 #define wren_math_h
 
+#include "wren_common.h"
+
 #include <math.h>
 #include <stdint.h>
 
@@ -29,6 +31,13 @@ static inline uint64_t wrenDoubleToBits(double num)
   WrenDoubleBits data;
   data.num = num;
   return data.bits64;
+}
+
+static inline double wrenDoubleClamp(double value, double low, double high)
+{
+  ASSERT(!(high < low), "low value higher than high value");
+  const double result = (value < low) ? low : ((value > high) ? high : value);
+  return result;
 }
 
 #endif
