@@ -654,11 +654,11 @@ DEF_NUM_INFIX(gte,      >=, BOOL)
 #define DEF_NUM_BITWISE(name, op)                                              \
     DEF_PRIMITIVE(num_bitwise##name)                                           \
     {                                                                          \
-      if (!validateInt(vm, args[0], "Left operand") ||                         \
-          !validateInt(vm, args[1], "Right operand")) return false;            \
-      uint32_t left = (uint32_t)AS_NUM(args[0]);                               \
-      uint32_t right = (uint32_t)AS_NUM(args[1]);                              \
-      RETURN_NUM(left op right);                                               \
+      if (!validateUInt52(vm, args[0], "Left operand") ||                      \
+          !validateUInt52(vm, args[1], "Right operand")) return false;         \
+      uint64_t left =  (uint64_t)AS_NUM(args[0]);                              \
+      uint64_t right = (uint64_t)AS_NUM(args[1]);                              \
+      RETURN_NUM((left op right) & WREN_UINT52_MASK);                          \
     }
 
 DEF_NUM_BITWISE(And,        &)
