@@ -14,7 +14,7 @@ System.print(3 * 4 ? 1 : 2) // expect: 1
 System.print(3 + 4 ? 1 : 2) // expect: 1
 System.print(true || false ? 1 : 2) // expect: 1
 System.print(!false ? 1 : 2) // expect: 1
-System.print(~0 ? 1 : 2) // expect: 1
+System.print(~false ? 1 : 2) // expect: 1
 System.print(3 is Num ? 1 : 2) // expect: 1
 System.print(Foo.new() ? 1 : 2) // expect: 1
 
@@ -31,7 +31,7 @@ System.print(true ? 3 * 4 : 2) // expect: 12
 System.print(true ? 3 + 4 : 2) // expect: 7
 System.print(true ? 1 || false : 2) // expect: 1
 System.print(true ? !true : 2) // expect: false
-System.print(true ? ~0 : 2) // expect: 4294967295
+System.print(true ? ~false : 2) // expect: true
 System.print(true ? 3 is Bool : 2) // expect: false
 System.print(true ? Foo.new() : 2) // expect: instance of Foo
 
@@ -47,7 +47,7 @@ System.print(false ? 1 : 3 * 4) // expect: 12
 System.print(false ? 1 : 3 + 4) // expect: 7
 System.print(false ? 1 : 2 || false) // expect: 2
 System.print(false ? 1 : !false) // expect: true
-System.print(false ? 1 : ~0) // expect: 4294967295
+System.print(false ? 1 : ~false) // expect: true
 System.print(false ? 1 : 3 is Num) // expect: true
 System.print(false ? 1 : Foo.new()) // expect: instance of Foo
 
