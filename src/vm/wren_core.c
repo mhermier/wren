@@ -654,7 +654,8 @@ DEF_NUM_INFIX(gte,      >=, BOOL)
 #define DEF_NUM_BITWISE(name, op)                                              \
     DEF_PRIMITIVE(num_bitwise##name)                                           \
     {                                                                          \
-      if (!validateNum(vm, args[1], "Right operand")) return false;            \
+      if (!validateInt(vm, args[0], "Left operand") ||                         \
+          !validateInt(vm, args[1], "Right operand")) return false;            \
       uint32_t left = (uint32_t)AS_NUM(args[0]);                               \
       uint32_t right = (uint32_t)AS_NUM(args[1]);                              \
       RETURN_NUM(left op right);                                               \
@@ -710,6 +711,7 @@ DEF_PRIMITIVE(num_bangeq)
 
 DEF_PRIMITIVE(num_bitwiseNot)
 {
+  if (!validateInt(vm, args[0], "Operand")) return false;
   // Bitwise operators always work on 32-bit unsigned ints.
   RETURN_NUM(~(uint32_t)AS_NUM(args[0]));
 }
