@@ -1,9 +1,9 @@
-System.print(~0) // expect: 4294967295
-System.print(~1) // expect: 4294967294
-System.print(~23) // expect: 4294967272
+System.print(~0 == 0xfffffffffffff) // expect: true
+System.print(~1 == 0xffffffffffffe) // expect: true
+System.print(~23 == 0xfffffffffffe8) // expect: true
 
-// Max u32 value.
-System.print(~0xffffffff) // expect: 0
+// Max u52 value.
+System.print(~0xfffffffffffff) // expect: 0
 
 // TODO: Negative numbers.
 // TODO: Floating-point numbers.

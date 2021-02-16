@@ -711,9 +711,8 @@ DEF_PRIMITIVE(num_bangeq)
 
 DEF_PRIMITIVE(num_bitwiseNot)
 {
-  if (!validateInt(vm, args[0], "Operand")) return false;
-  // Bitwise operators always work on 32-bit unsigned ints.
-  RETURN_NUM(~(uint32_t)AS_NUM(args[0]));
+  if (!validateUInt52(vm, args[0], "Operand")) return false;
+  RETURN_NUM((~(uint64_t)AS_NUM(args[0])) & WREN_UINT52_MASK);
 }
 
 DEF_PRIMITIVE(num_dotDot)
