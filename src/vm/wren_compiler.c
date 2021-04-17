@@ -3053,6 +3053,11 @@ static void forStatement(Compiler* compiler)
   pushScope(compiler);
 
   consume(compiler, TOKEN_LEFT_PAREN, "Expect '(' after 'for'.");
+
+  // Match optional `var` declaration, for symetry with other branching/looping
+  // declarations.
+  match(compiler, TOKEN_VAR);
+
   consume(compiler, TOKEN_NAME, "Expect for loop variable name.");
 
   // Remember the name of the loop variable.
