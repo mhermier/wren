@@ -1746,6 +1746,7 @@ static void expression(Compiler* compiler);
 static void statement(Compiler* compiler);
 static void definition(Compiler* compiler);
 static void parsePrecedence(Compiler* compiler, Precedence precedence);
+static void variableDefinition(Compiler* compiler);
 
 // Replaces the placeholder argument for a previous CODE_JUMP or CODE_JUMP_IF
 // instruction with an offset that jumps to the current end of bytecode.
@@ -3122,11 +3123,25 @@ static void forStatement(Compiler* compiler)
   popScope(compiler);
 }
 
+static void foo(Compiler* compiler) {
+  if (match(compiler, TOKEN_VAR))
+  {
+    variableDefinition(compiler);
+    emitOp(compiler, CODE_DUP);
+  }
+  else
+  {
+    expression(compiler);
+  }
+}
+
 static void ifStatement(Compiler* compiler)
 {
+  pushScope(compiler);
+
   // Compile the condition.
   consume(compiler, TOKEN_LEFT_PAREN, "Expect '(' after 'if'.");
-  expression(compiler);
+  foo(compiler);
   consume(compiler, TOKEN_RIGHT_PAREN, "Expect ')' after if condition.");
   
   // Jump to the else branch if the condition is false.
@@ -3151,6 +3166,8 @@ static void ifStatement(Compiler* compiler)
   {
     patchJump(compiler, ifJump);
   }
+
+  popScope(compiler);
 }
 
 static void whileStatement(Compiler* compiler)
@@ -3158,14 +3175,18 @@ static void whileStatement(Compiler* compiler)
   Loop loop;
   startLoop(compiler, &loop);
 
+  pushScope(compiler);
+
   // Compile the condition.
   consume(compiler, TOKEN_LEFT_PAREN, "Expect '(' after 'while'.");
-  expression(compiler);
+  foo(compiler);
   consume(compiler, TOKEN_RIGHT_PAREN, "Expect ')' after while condition.");
 
   testExitLoop(compiler);
   loopBody(compiler);
   endLoop(compiler);
+
+  popScope(compiler);
 }
 
 // Compiles a simple statement. These can only appear at the top-level or
